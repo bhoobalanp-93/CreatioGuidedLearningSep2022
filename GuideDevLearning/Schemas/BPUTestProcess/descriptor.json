@@ -2,7 +2,7 @@
   "Descriptor": {
     "UId": "e5ee3017-5343-4e98-98da-109bfe998a36",
     "Name": "BPUTestProcess",
-    "ModifiedOnUtc": "\/Date(1664985555000)\/",
+    "ModifiedOnUtc": "\/Date(1664988936000)\/",
     "ManagerName": "ProcessSchemaManager",
     "Caption": "Test Process",
     "DependsOn": []
