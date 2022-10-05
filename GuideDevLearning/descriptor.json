@@ -1,0 +1,18 @@
+﻿{
+  "Descriptor": {
+    "UId": "4320b4e4-0a9a-368f-223d-efc4e7673c26",
+    "Name": "GuideDevLearning",
+    "Type": 1,
+    "ModifiedOnUtc": "\/Date(1664984005000)\/",
+    "Maintainer": "Customer",
+    "ProjectPath": "Files/GuideDevLearning.csproj",
+    "Description": "Guided learning - Development and Fast-track certification.",
+    "DependsOn": [
+      {
+        "UId": "3f299622-2079-4a62-ba18-6d32c1d0d6af",
+        "PackageVersion": "7.8.0",
+        "Name": "SalesEnterprise_Marketing_ServiceEnt"
+      }
+    ]
+  }
+}
