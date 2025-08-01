@@ -1,0 +1,95 @@
+<div class="phone-input-container" 
+     [class.focused]="isFocused" 
+     [class.disabled]="disabled" 
+     [class.error]="hasError"
+     (document:click)="onDocumentClick($event)">
+  
+  <div class="phone-input-wrapper">
+    <!-- Country Code Dropdown -->
+    <div class="country-code-section" *ngIf="showCountryCode">
+      <button 
+        type="button"
+        class="country-code-button"
+        (click)="toggleDropdown()"
+        [disabled]="disabled"
+        [attr.aria-expanded]="isDropdownOpen"
+        [attr.aria-label]="'Select country code, currently ' + getSelectedCountry().name">
+        <span class="flag">{{ getSelectedCountry().flag }}</span>
+        <span class="code">{{ selectedCountryCode }}</span>
+        <svg class="dropdown-arrow" 
+             [class.open]="isDropdownOpen" 
+             width="12" 
+             height="12" 
+             viewBox="0 0 24 24" 
+             fill="currentColor">
+          <path d="M7 10l5 5 5-5z"/>
+        </svg>
+      </button>
+      
+      <!-- Dropdown Menu -->
+      <div class="country-dropdown" 
+           *ngIf="isDropdownOpen"
+           role="listbox"
+           [attr.aria-label]="'Country code options'">
+        
+        <div class="dropdown-search">
+          <input 
+            type="text"
+            class="search-input"
+            placeholder="Search countries..."
+            (input)="onCountrySearch($event)"
+            [value]="searchTerm"
+            autocomplete="off">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          </svg>
+        </div>
+        
+        <div class="dropdown-list">
+          <button 
+            type="button"
+            class="country-option"
+            *ngFor="let country of filteredCountryCodes; trackBy: trackByCountry"
+            (click)="selectCountryCode(country)"
+            [class.selected]="country.code === selectedCountryCode"
+            role="option"
+            [attr.aria-selected]="country.code === selectedCountryCode">
+            <span class="flag">{{ country.flag }}</span>
+            <span class="name">{{ country.name }}</span>
+            <span class="code">{{ country.code }}</span>
+          </button>
+          
+          <div class="no-results" *ngIf="filteredCountryCodes.length === 0">
+            No countries found
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Phone Number Input -->
+    <input 
+      type="tel"
+      class="phone-number-input"
+      [value]="formattedValue"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      autocomplete="tel"
+      [attr.aria-label]="'Phone number input'"
+      [attr.aria-invalid]="hasError">
+  </div>
+  
+  <!-- Clear Button -->
+  <button 
+    type="button"
+    class="clear-button"
+    *ngIf="formattedValue && !disabled"
+    (click)="writeValue('')"
+    [attr.aria-label]="'Clear phone number'">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+    </svg>
+  </button>
+</div>

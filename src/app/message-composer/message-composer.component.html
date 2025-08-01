@@ -1,0 +1,115 @@
+<form [formGroup]="messageForm" (ngSubmit)="onSubmit()" class="crt-message-composer">
+  <div class="crt-card">
+    <div class="composer-header">
+      <h3 class="composer-title">Message Composer</h3>
+      <p class="composer-subtitle">Send SMS/Message to recipient</p>
+    </div>
+
+    <!-- Phone Number Fields Row -->
+    <div class="phone-inputs-row">
+      <div class="phone-input-group">
+        <label class="crt-label" for="fromPhone">
+          {{ fromPhoneLabel }}
+          <span class="required-indicator" *ngIf="fromPhoneRequired">*</span>
+        </label>
+        <crt-phone-input
+          id="fromPhone"
+          formControlName="fromPhone"
+          [placeholder]="'Enter ' + fromPhoneLabel.toLowerCase() + ' phone number'"
+          [disabled]="disabled"
+          [hasError]="fromPhone?.invalid && fromPhone?.touched">
+        </crt-phone-input>
+        <div class="error-message" *ngIf="getFieldError('fromPhone')">
+          {{ getFieldError('fromPhone') }}
+        </div>
+      </div>
+
+      <div class="phone-input-group">
+        <label class="crt-label" for="toPhone">
+          {{ toPhoneLabel }}
+          <span class="required-indicator" *ngIf="toPhoneRequired">*</span>
+        </label>
+        <crt-phone-input
+          id="toPhone"
+          formControlName="toPhone"
+          [placeholder]="'Enter ' + toPhoneLabel.toLowerCase() + ' phone number'"
+          [disabled]="disabled"
+          [hasError]="toPhone?.invalid && toPhone?.touched">
+        </crt-phone-input>
+        <div class="error-message" *ngIf="getFieldError('toPhone')">
+          {{ getFieldError('toPhone') }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Message Textarea -->
+    <div class="message-group">
+      <div class="message-header">
+        <label class="crt-label" for="message">
+          {{ messageLabel }}
+          <span class="required-indicator" *ngIf="messageRequired">*</span>
+        </label>
+        <div class="character-counter">
+          <span [class.warning]="remainingCharacters < 50" [class.error]="remainingCharacters < 0">
+            {{ remainingCharacters }} characters remaining
+          </span>
+        </div>
+      </div>
+      
+      <div class="message-input-wrapper">
+        <textarea
+          id="message"
+          formControlName="message"
+          class="crt-textarea message-textarea"
+          [placeholder]="placeholder"
+          [disabled]="disabled"
+          [class.error]="message?.invalid && message?.touched"
+          rows="6">
+        </textarea>
+        
+        <div class="message-actions">
+          <button
+            type="button"
+            class="clear-button"
+            (click)="clearMessage()"
+            [disabled]="!message?.value || disabled"
+            title="Clear message">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="error-message" *ngIf="getFieldError('message')">
+        {{ getFieldError('message') }}
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button
+        type="button"
+        class="crt-button secondary"
+        (click)="resetForm()"
+        [disabled]="disabled || isSubmitting">
+        Reset
+      </button>
+      
+      <button
+        type="submit"
+        class="crt-button primary"
+        [disabled]="!isFormValid || disabled || isSubmitting">
+        <span *ngIf="!isSubmitting">{{ submitButtonText }}</span>
+        <span *ngIf="isSubmitting" class="loading-text">
+          <svg class="spinner" width="16" height="16" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="15.71 15.71">
+              <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" values="0 12 12;360 12 12"/>
+            </circle>
+          </svg>
+          Sending...
+        </span>
+      </button>
+    </div>
+  </div>
+</form>
