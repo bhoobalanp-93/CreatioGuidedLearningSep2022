@@ -1,0 +1,278 @@
+.phone-input-container {
+  position: relative;
+  width: 100%;
+  
+  .phone-input-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--crt-input-height);
+    border: 1px solid var(--crt-neutral-300);
+    border-radius: var(--crt-radius-sm);
+    background-color: white;
+    transition: all 0.2s ease-in-out;
+    overflow: hidden;
+    
+    &:hover:not(.disabled) {
+      border-color: var(--crt-neutral-400);
+    }
+  }
+
+  &.focused .phone-input-wrapper {
+    border-color: var(--crt-primary-500);
+    box-shadow: 0 0 0 3px rgba(26, 140, 255, 0.1);
+  }
+
+  &.error .phone-input-wrapper {
+    border-color: var(--crt-error);
+    
+    &.focused {
+      box-shadow: 0 0 0 3px rgba(234, 67, 53, 0.1);
+    }
+  }
+
+  &.disabled .phone-input-wrapper {
+    background-color: var(--crt-neutral-100);
+    border-color: var(--crt-neutral-200);
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .country-code-section {
+    position: relative;
+    flex-shrink: 0;
+    
+    .country-code-button {
+      display: flex;
+      align-items: center;
+      gap: var(--crt-space-xs);
+      padding: 0 var(--crt-space-sm);
+      height: 100%;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: var(--crt-font-size-sm);
+      color: var(--crt-neutral-700);
+      transition: background-color 0.2s ease-in-out;
+      border-right: 1px solid var(--crt-neutral-200);
+      
+      &:hover:not(:disabled) {
+        background-color: var(--crt-neutral-50);
+      }
+      
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+      
+      .flag {
+        font-size: 16px;
+        line-height: 1;
+      }
+      
+      .code {
+        font-weight: 500;
+        min-width: 32px;
+      }
+      
+      .dropdown-arrow {
+        transition: transform 0.2s ease-in-out;
+        color: var(--crt-neutral-500);
+        
+        &.open {
+          transform: rotate(180deg);
+        }
+      }
+    }
+    
+    .country-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      width: 280px;
+      max-height: 300px;
+      background: white;
+      border: 1px solid var(--crt-neutral-300);
+      border-radius: var(--crt-radius-md);
+      box-shadow: var(--crt-shadow-lg);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      
+      .dropdown-search {
+        position: relative;
+        padding: var(--crt-space-sm);
+        border-bottom: 1px solid var(--crt-neutral-200);
+        
+        .search-input {
+          width: 100%;
+          padding: var(--crt-space-sm) var(--crt-space-sm) var(--crt-space-sm) 36px;
+          border: 1px solid var(--crt-neutral-300);
+          border-radius: var(--crt-radius-sm);
+          font-size: var(--crt-font-size-sm);
+          
+          &:focus {
+            outline: none;
+            border-color: var(--crt-primary-500);
+            box-shadow: 0 0 0 2px rgba(26, 140, 255, 0.1);
+          }
+        }
+        
+        .search-icon {
+          position: absolute;
+          left: 20px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: var(--crt-neutral-500);
+          pointer-events: none;
+        }
+      }
+      
+      .dropdown-list {
+        flex: 1;
+        overflow-y: auto;
+        max-height: 240px;
+        
+        .country-option {
+          display: flex;
+          align-items: center;
+          gap: var(--crt-space-sm);
+          width: 100%;
+          padding: var(--crt-space-sm) var(--crt-space-md);
+          border: none;
+          background: none;
+          text-align: left;
+          cursor: pointer;
+          font-size: var(--crt-font-size-sm);
+          transition: background-color 0.2s ease-in-out;
+          
+          &:hover {
+            background-color: var(--crt-neutral-50);
+          }
+          
+          &.selected {
+            background-color: var(--crt-primary-50);
+            color: var(--crt-primary-700);
+          }
+          
+          .flag {
+            font-size: 16px;
+            line-height: 1;
+            flex-shrink: 0;
+          }
+          
+          .name {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          
+          .code {
+            color: var(--crt-neutral-600);
+            font-weight: 500;
+            flex-shrink: 0;
+          }
+        }
+        
+        .no-results {
+          padding: var(--crt-space-md);
+          text-align: center;
+          color: var(--crt-neutral-500);
+          font-size: var(--crt-font-size-sm);
+        }
+      }
+    }
+  }
+
+  .phone-number-input {
+    flex: 1;
+    height: 100%;
+    padding: 0 var(--crt-space-md);
+    border: none;
+    background: none;
+    font-size: var(--crt-font-size-sm);
+    color: var(--crt-neutral-800);
+    
+    &:focus {
+      outline: none;
+    }
+    
+    &:disabled {
+      color: var(--crt-neutral-500);
+      cursor: not-allowed;
+    }
+    
+    &::placeholder {
+      color: var(--crt-neutral-500);
+    }
+  }
+
+  .clear-button {
+    position: absolute;
+    right: var(--crt-space-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--crt-neutral-500);
+    cursor: pointer;
+    padding: var(--crt-space-xs);
+    border-radius: var(--crt-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    z-index: 10;
+    
+    &:hover {
+      background-color: var(--crt-neutral-100);
+      color: var(--crt-neutral-700);
+    }
+    
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+// Mobile responsive adjustments
+@media (max-width: 480px) {
+  .phone-input-container {
+    .country-code-section .country-dropdown {
+      width: 100vw;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 320px;
+    }
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .phone-input-container {
+    .phone-input-wrapper {
+      border-width: 2px;
+    }
+    
+    &.focused .phone-input-wrapper {
+      border-color: var(--crt-neutral-900);
+    }
+    
+    &.error .phone-input-wrapper {
+      border-color: var(--crt-error);
+      background-color: rgba(234, 67, 53, 0.05);
+    }
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .phone-input-container {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+}
